@@ -17,3 +17,7 @@ class TestChessBoard(unittest.TestCase):
         expected = "Chessboard sizes should be positive."
         result = ChessBoard.print_chess_board("7", "-10")
         self.assertEqual(result, expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
