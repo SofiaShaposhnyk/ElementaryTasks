@@ -1,6 +1,22 @@
 import sys
 
 
+def validate_args(args):
+    if len(args) == 3:
+        try:
+            min_limit = int(args[1])
+            max_limit = int(args[2])
+        except ValueError:
+            return "Invalid arguments. Limits should be integer."
+        else:
+            if min_limit > 0 and max_limit > 0:
+                return min_limit, max_limit
+            else:
+                return "Invalid arguments. Limits should be positive."
+    else:
+        return "Enter two positive limits to generate a sequence."
+
+
 def get_fib_sequence(minimum, maximum):
     curr = 1
     previous = 0
@@ -13,16 +29,8 @@ def get_fib_sequence(minimum, maximum):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 3:
-        try:
-            min_limit = int(sys.argv[1])
-            max_limit = int(sys.argv[2])
-        except ValueError:
-            print("Invalid arguments. Limits should be integer.")
-        else:
-            if min_limit > 0 and max_limit > 0:
-                print(get_fib_sequence(int(sys.argv[1]), int(sys.argv[2])))
-            else:
-                print("Invalid arguments. Limits should be positive.")
+    validation_result = validate_args(sys.argv)
+    if type(validation_result) == str:
+        print(validation_result)
     else:
-        print("Enter two positive limits to generate a sequence.")
+        print(get_fib_sequence(*validation_result))
