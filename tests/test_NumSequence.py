@@ -26,3 +26,7 @@ class TestNumSequence(unittest.TestCase):
         expected = "Enter one number to generate a sequence."
         result = NumSequence.validate(args)
         self.assertEqual(result, expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
