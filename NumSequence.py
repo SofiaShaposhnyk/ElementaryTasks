@@ -2,19 +2,29 @@ import sys
 import math
 
 
-def get_sequence(n):
-    try:
-        limit = int(math.sqrt(int(n)))
-    except ValueError:
-        print("Invalid argument. Enter a number.")
-        return False
+def validate(args):
+    if len(args) == 2:
+        try:
+            limit = int(args[1])
+        except ValueError:
+            return "Limit should be integer."
+        else:
+            if limit > 0:
+                return limit
+            else:
+                return "Limit should be positive."
+    else:
+        return "Enter one number to generate a sequence."
+
+
+def get_sequence(number):
+    limit = int(math.sqrt(number))
     return ", ".join(map(str, tuple(range(0, limit + 1, 1))))
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        result = get_sequence(sys.argv[1])
-        if result:
-            print(result)
+    validation_result = validate(sys.argv)
+    if type(validation_result) == int:
+        print(get_sequence(validation_result))
     else:
-        print("Enter a number to generate a sequence.")
+        print(validation_result)
