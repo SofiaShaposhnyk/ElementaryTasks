@@ -1,11 +1,15 @@
 from NumberComb import number_of_combinations
 
 
+def get_input(text):
+    return input(text)
+
+
 def choose_algorithm(alg_name, number):
-    if alg_name == "Moscow" or "Peter":
+    if alg_name == "Moscow" or alg_name == "Peter":
         return moscow_algorithm(number)
     else:
-        print("algorithm doesn't exist!")
+        return "Algorithm doesn't exist!"
 
 
 def moscow_algorithm(number):
@@ -25,28 +29,32 @@ def moscow_algorithm(number):
 
 
 def get_algorithm_name():
-    try:
-        with open("LuckyTicketsAlgorithm.txt") as file:
-            name = file.read()
-            return name
-    except FileNotFoundError:
-        print("File not found.")
+    file_path = get_input("Enter path to file with algorithm name:")
+    with open(file_path) as file:
+        name = file.read()
+        return name
 
 
 def get_number_of_digits():
-    print("Enter number of digits:")
     try:
-        number = int(input())
+        number = int(get_input("Enter number of digits:"))
     except ValueError:
-        print("Wrong! Number should be integer.")
+        return "Wrong! Number should be integer."
     else:
         if number in (2, 4, 6, 8):
             return number
         else:
-            print("Wrong! Number should be even, less then 10 and not 0.")
+            return "Wrong! Number should be even, less then 10 and not 0."
 
 
 if __name__ == "__main__":
-    algorithm_name = get_algorithm_name()
-    number_of_digits = get_number_of_digits()
-    print(choose_algorithm(algorithm_name, number_of_digits // 2))
+    try:
+        algorithm_name = get_algorithm_name()
+    except FileNotFoundError:
+        print("File not found")
+    else:
+        number_of_digits = get_number_of_digits()
+        if type(number_of_digits) == int:
+            print(choose_algorithm(algorithm_name, number_of_digits // 2))
+        else:
+            print(number_of_digits)
