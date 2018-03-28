@@ -3,15 +3,14 @@ import sys
 
 def validate_args(args):
     """Validate arguments.
-    Args:
-    args (list): command lime arguments
 
-    Returns:
-    tuple: min_limit(int) - first command line argument
-                            if it's integer and greater then 0
-           max_limit(int) - second command line argument
-                            if it's integer and greater then 0
-    str: reason of invalid value
+    :param args: (list)command lime arguments
+    :return: (tuple)min_limit(int) - first command line argument
+                    if it's integer and greater then 0
+                    max_limit(int) - second command line argument
+                    if it's integer and greater then 0
+             (str)reason of invalid value
+
     """
     if len(args) == 3:
         try:
@@ -31,12 +30,9 @@ def validate_args(args):
 def get_fib_sequence(minimum, maximum):
     """Calculate Fibonacci sequence for the range.
 
-    Args:
-    minimum(int): min limit fo sequence
-    maximum(int): max limit foe sequence
-
-    Returns:
-    str - Fibonacci sequence for the range, separated comma
+    :param minimum: (int)min limit fo sequence
+    :param maximum: (int)max limit foe sequence
+    :return: (str)Fibonacci sequence for the range, separated comma
     """
     curr = 1
     previous = 0
