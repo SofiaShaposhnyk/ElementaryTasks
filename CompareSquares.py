@@ -2,43 +2,71 @@ import re
 from Triangle import Triangle
 
 
+def input_text(text):
+    return input(text)
+
+
 def input_parameters():
-    print("Input triangle parameters:")
-    triangle_parameters = re.sub("[ /t]", "", input()).lower().split(",")
+    """Input and validate parameters.
+
+    :return: tuple: side1(float), side2(float), side3(float) - valid sides for triangle
+             tuple: False, str - reason of invalid values
+
+    """
+    triangle_parameters = re.sub(" ", "",
+                                 input_text("Input triangle parameters:")).lower().split(",")
     if len(triangle_parameters) == 4:
         name = triangle_parameters[0]
         try:
             side1, side2, side3 = map(float, triangle_parameters[1:])
         except ValueError:
-            print("Sides parameters should be float.")
-            return False
+            return False, "Sides parameters should be float."
         if validate_parameters(side1, side2, side3):
             return name, side1, side2, side3
         else:
-            print("Triangle doesn't exist.")
-            return False
+            return False, "Triangle doesn't exist."
     else:
-        print("Enter name snd three sides, separated commas.")
-        return False
+        return False, "Enter name snd three sides, separated commas."
 
 
 def continue_input():
-    print("Do you want to enter one more triangle?")
-    next_triangle = input().lower()
+    """Request for continuation.
+
+    :return:(bool) True if user input "y" or "yes"
+            False otherwise
+    """
+    next_triangle = input_text("Do you want to enter one more triangle?").lower()
     if next_triangle != "yes" and next_triangle != "y":
         return False
     return True
 
 
 def print_triangles(triangle_list):
-    print("==========Triangles list:==========")
+    """Sort triangles by square and return it in descending order.
+
+    :param triangle_list: list of Triangle objects
+    :return: (str)triangles names and squares in descending order
+    """
+    triangles.sort(key=Triangle.get_square, reverse=True)
+    result = "==========Triangles list:=========="
     for tr in range(len(triangle_list)):
-        print((tr + 1), ". [Triangle {}]: {:.2f} cm".format(triangles[tr].name, triangles[tr].square))
+        result += ("\n" + str(tr + 1) +
+                   ". [Triangle {}]: {} cm".format(triangles[tr].name,
+                                                   triangles[tr].square))
+    return result
 
 
 def validate_parameters(side_1, side_2, side_3):
+    """Validate sides for triangle.
+
+    :param side_1: (float)side of triangle
+    :param side_2: (float)side of triangle
+    :param side_3: (float)side of triangle
+    :return: (bool) - True if triangle with specified sides exist
+                      False otherwise
+    """
     if side_1 > 0 and side_2 > 0 and side_3 > 0 and (side_1 + side_2 > side_3) and \
-            (side_1 + side_3 > side_2) and (side_3 + side_2 > side_3):
+            (side_1 + side_3 > side_2) and (side_3 + side_2 > side_1):
         return True
     else:
         return False
@@ -48,9 +76,10 @@ if __name__ == "__main__":
     triangles = []
     while True:
         parameters = input_parameters()
-        if parameters:
+        if parameters[0]:
             triangles.append(Triangle(*parameters))
+        else:
+            print(parameters[1])
         if not continue_input():
             break
-    triangles.sort(key=Triangle.get_square, reverse=True)
-    print_triangles(triangles)
+    print(print_triangles(triangles))
