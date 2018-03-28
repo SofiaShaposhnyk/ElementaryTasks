@@ -1,77 +1,153 @@
-def can_we_fit(envelop1, envelop2):
-    envelop1, envelop2 = sort_envelops(envelop1, envelop2)
-    if (is_sqrt_sides_bigger(envelop1, envelop2) and
-        is_sum_sides_bigger(envelop1, envelop2) and
-            is_min_side_bigger(envelop1, envelop2)):
-        return print("Possible!")
-    else:
-        return print("Impossible!")
+def input_text(text):
+    return input(text)
 
 
-def is_sqrt_sides_bigger(envelop1, envelop2):
-    if envelop1["side1"]**2 + envelop1["side2"]**2 > envelop2["side1"]**2 + envelop2["side2"]:
+def is_possible_to_fit(rectangle1, rectangle2):
+    """Compare rectangles.
+
+    Args:
+    rectangle1 (dict): should contain keys "side1" and "side2"
+    rectangle2 (dict): should contain keys "side1" and "side2"
+
+    Returns:
+    bool: True if it`s possible to fit rectangle2 in rectangle1,
+          False otherwise.
+    """
+    rectangle1, rectangle2 = sort_envelops(rectangle1, rectangle2)
+    if (is_sqrt_sides_greater(rectangle1, rectangle2) and
+        is_sum_sides_bigger(rectangle1, rectangle2) and
+            is_min_side_bigger(rectangle1, rectangle2)):
         return True
     else:
         return False
 
 
-def is_sum_sides_bigger(envelop1, envelop2):
-    if envelop1["side1"] + envelop1["side2"] > envelop2['side1'] + envelop2["side2"]:
+def is_sqrt_sides_greater(rectangle1, rectangle2):
+    """Compare sums of squared sizes.
+
+    Args:
+    rectangle1 (dict): should contain keys "side1" and "side2"
+    rectangle2 (dict): should contain keys "side1" and "side2"
+
+    Returns:
+    bool: True if sum of squared sizes rectangle1 greater
+          the sum of squared sizes rectangle2,
+          False otherwise.
+    """
+    if rectangle1["side1"]**2 + rectangle1["side2"]**2 > \
+            rectangle2["side1"]**2 + rectangle2["side2"]:
         return True
     else:
         return False
 
 
-def is_min_side_bigger(envelop1, envelop2):
-    if min(envelop1["side1"], envelop1["side2"]) > min(envelop2["side1"], envelop2["side2"]):
+def is_sum_sides_bigger(rectangle1, rectangle2):
+    """Compare sides sums.
+
+    Args:
+    rectangle1 (dict): should contain keys "side1" and "side2"
+    rectangle2 (dict): should contain keys "side1" and "side2"
+
+    Returns:
+    bool: True if sides sums rectangle1 greater then
+          sides sums rectangle2,
+          False otherwise.
+    """
+    if sum(rectangle1) > sum(rectangle2):
         return True
     else:
         return False
 
 
-def sort_envelops(envelop1, envelop2):
-    if envelop1["side1"] * envelop1["side2"] < envelop2["side1"] * envelop2["side2"]:
-        return envelop2, envelop1
+def is_min_side_bigger(rectangle1, rectangle2):
+    """Compare min sides of rectangles.
+
+    Args:
+    rectangle1 (dict): should contain keys "side1" and "side2"
+    rectangle2 (dict): should contain keys "side1" and "side2"
+
+    Returns:
+    bool: True if min side of rectangle1 greater then
+          min side of rectangle2,
+          False otherwise.
+    """
+    if min(rectangle1["side1"], rectangle1["side2"]) > \
+            min(rectangle2["side1"], rectangle2["side2"]):
+        return True
     else:
-        return envelop1, envelop2
+        return False
+
+
+def sort_envelops(rectangle1, rectangle2):
+    """Sort two rectangles by squares.
+
+    Args:
+    rectangle1 (dict): should contain keys "side1" and "side2"
+    rectangle2 (dict): should contain keys "side1" and "side2"
+
+    Returns:
+    tuple: [0](dict) - rectangle with a greater square
+           [1](dict) - rectangle with a smaller square
+    """
+    if rectangle1["side1"] * rectangle1["side2"] < \
+            rectangle2["side1"] * rectangle2["side2"]:
+        return rectangle2, rectangle1
+    else:
+        return rectangle1, rectangle2
 
 
 def validate_side(side):
+    """Validate side of rectangle.
+
+    Args:
+    side (str): side to validate
+
+    Returns:
+    float: side if it's float and greater then 0.
+           Otherwise ask to input valid value.
+    """
     success = False
     while not success:
         try:
             side = float(side)
             success = True
         except ValueError:
-            print("Wrong! Parameter should be float.\nTry again:")
-            side = input()
+            side = input_text("Wrong! Parameter should be float.\nTry again:")
             continue
         if side <= 0:
-            print("Wrong! Parameters should be bigger then 0.\nTry again:")
-            side = input()
+            side = input_text("Wrong! Parameters should be bigger then 0.\nTry again:")
             success = False
     return side
 
 
 def input_parameters():
+    """Input parameters.
+
+    Returns:
+    tuple: [0](dict) - rectangle1 with keys "side1" and "side2" and valid values
+           [1](dict) - rectangle2 with keys "side1" and "side2" and valid values
+
+    Ask to enter value of sides one at the time.
+    """
     print("Enter first envelop parameters:")
-    side_1 = validate_side(input("Side 1:"))
-    side_2 = validate_side(input("Side 2:"))
-    envelop1 = {"side1": side_1, "side2": side_2}
+    side_1 = validate_side(input_text("Side 1:"))
+    side_2 = validate_side(input_text("Side 2:"))
+    rectangle1 = {"side1": side_1, "side2": side_2}
     print("Enter second envelop parameters:")
-    side_1 = validate_side(input("Side 1:"))
-    side_2 = validate_side(input("Side 2:"))
-    envelop2 = {"side1": side_1, "side2": side_2}
-    return envelop1, envelop2
+    side_1 = validate_side(input_text("Side 1:"))
+    side_2 = validate_side(input_text("Side 2:"))
+    rectangle2 = {"side1": side_1, "side2": side_2}
+    return rectangle1, rectangle2
 
 
 if __name__ == "__main__":
     one_more = True
     while one_more:
         first_envelop, second_envelop = input_parameters()
-        if first_envelop:
-            can_we_fit(first_envelop, second_envelop)
-            print("Do you want to continue?")
-            answer = input().lower()
-            if answer != "yes" and answer != "y":
-                one_more = False
+        if is_possible_to_fit(first_envelop, second_envelop):
+            print("Possible")
+        else:
+            print("Impossible")
+        answer = input("Do you want to continue?").lower()
+        if answer != "yes" and answer != "y":
+            one_more = False
