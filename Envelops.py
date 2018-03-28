@@ -5,13 +5,11 @@ def input_text(text):
 def is_possible_to_fit(rectangle1, rectangle2):
     """Compare rectangles.
 
-    Args:
-    rectangle1 (dict): should contain keys "side1" and "side2"
-    rectangle2 (dict): should contain keys "side1" and "side2"
+    :param rectangle1: (dict)should contain keys "side1" and "side2"
+    :param rectangle2: (dict)should contain keys "side1" and "side2"
+    :return: (bool)True if it`s possible to fit rectangle2 in rectangle1,
+             False otherwise.
 
-    Returns:
-    bool: True if it`s possible to fit rectangle2 in rectangle1,
-          False otherwise.
     """
     rectangle1, rectangle2 = sort_envelops(rectangle1, rectangle2)
     if (is_sqrt_sides_greater(rectangle1, rectangle2) and
@@ -25,14 +23,12 @@ def is_possible_to_fit(rectangle1, rectangle2):
 def is_sqrt_sides_greater(rectangle1, rectangle2):
     """Compare sums of squared sizes.
 
-    Args:
-    rectangle1 (dict): should contain keys "side1" and "side2"
-    rectangle2 (dict): should contain keys "side1" and "side2"
+    :param rectangle1: (dict)should contain keys "side1" and "side2"
+    :param rectangle2: (dict)should contain keys "side1" and "side2"
+    :return: (bool)True if sum of squared sizes rectangle1 greater
+             the sum of squared sizes rectangle2,
+             False otherwise.
 
-    Returns:
-    bool: True if sum of squared sizes rectangle1 greater
-          the sum of squared sizes rectangle2,
-          False otherwise.
     """
     if rectangle1["side1"]**2 + rectangle1["side2"]**2 > \
             rectangle2["side1"]**2 + rectangle2["side2"]:
@@ -44,14 +40,11 @@ def is_sqrt_sides_greater(rectangle1, rectangle2):
 def is_sum_sides_bigger(rectangle1, rectangle2):
     """Compare sides sums.
 
-    Args:
-    rectangle1 (dict): should contain keys "side1" and "side2"
-    rectangle2 (dict): should contain keys "side1" and "side2"
-
-    Returns:
-    bool: True if sides sums rectangle1 greater then
-          sides sums rectangle2,
-          False otherwise.
+    :param rectangle1: (dict)should contain keys "side1" and "side2"
+    :param rectangle2: (dict)should contain keys "side1" and "side2"
+    :return: (bool)True if sides sums rectangle1 greater then
+              sides sums rectangle2,
+              False otherwise.
     """
     if sum(rectangle1) > sum(rectangle2):
         return True
@@ -62,14 +55,12 @@ def is_sum_sides_bigger(rectangle1, rectangle2):
 def is_min_side_bigger(rectangle1, rectangle2):
     """Compare min sides of rectangles.
 
-    Args:
-    rectangle1 (dict): should contain keys "side1" and "side2"
-    rectangle2 (dict): should contain keys "side1" and "side2"
+    :param rectangle1: (dict)should contain keys "side1" and "side2"
+    :param rectangle2: (dict)should contain keys "side1" and "side2"
+    :return: (bool)True if min side of rectangle1 greater then
+              min side of rectangle2,
+              False otherwise.
 
-    Returns:
-    bool: True if min side of rectangle1 greater then
-          min side of rectangle2,
-          False otherwise.
     """
     if min(rectangle1["side1"], rectangle1["side2"]) > \
             min(rectangle2["side1"], rectangle2["side2"]):
@@ -81,13 +72,11 @@ def is_min_side_bigger(rectangle1, rectangle2):
 def sort_envelops(rectangle1, rectangle2):
     """Sort two rectangles by squares.
 
-    Args:
-    rectangle1 (dict): should contain keys "side1" and "side2"
-    rectangle2 (dict): should contain keys "side1" and "side2"
+    :param rectangle1: (dict)should contain keys "side1" and "side2"
+    :param rectangle2: (dict)should contain keys "side1" and "side2"
+    :return: (tuple):[0](dict) - rectangle with a greater square
+                     [1](dict) - rectangle with a smaller square
 
-    Returns:
-    tuple: [0](dict) - rectangle with a greater square
-           [1](dict) - rectangle with a smaller square
     """
     if rectangle1["side1"] * rectangle1["side2"] < \
             rectangle2["side1"] * rectangle2["side2"]:
@@ -99,12 +88,10 @@ def sort_envelops(rectangle1, rectangle2):
 def validate_side(side):
     """Validate side of rectangle.
 
-    Args:
-    side (str): side to validate
+    :param side:(str)side to validate
+    :return:(float)side if it's float and greater then 0.
+             Otherwise ask to input valid value.
 
-    Returns:
-    float: side if it's float and greater then 0.
-           Otherwise ask to input valid value.
     """
     success = False
     while not success:
@@ -123,11 +110,10 @@ def validate_side(side):
 def input_parameters():
     """Input parameters.
 
-    Returns:
-    tuple: [0](dict) - rectangle1 with keys "side1" and "side2" and valid values
-           [1](dict) - rectangle2 with keys "side1" and "side2" and valid values
+    :return: (tuple):[0](dict) - rectangle1 with keys "side1" and "side2" and valid values
+                     [1](dict) - rectangle2 with keys "side1" and "side2" and valid values
 
-    Ask to enter value of sides one at the time.
+    Request to enter value of sides one at the time.
     """
     print("Enter first envelop parameters:")
     side_1 = validate_side(input_text("Side 1:"))
