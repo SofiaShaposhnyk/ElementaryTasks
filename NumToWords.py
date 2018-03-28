@@ -2,6 +2,9 @@ import sys
 from numberNames import ones, tens, hundreds, other
 
 
+result = []
+
+
 def get_form(digits, index):
     index = int(index / 3)
     if other[index] == "":
@@ -13,7 +16,7 @@ def get_form(digits, index):
     elif 2 <= digits["ones"] <= 4 and digits["tens"] != 1:
         if index == 1:
             return other[index][2]
-        return other[index] + "a"
+        return other[index] + "а"
     else:
         if index == 1:
             return other[index][1]
@@ -47,8 +50,6 @@ def to_words(number):
     count_numbers = len(number)
     number = int(number)
     position = 0
-    global result
-    result = []
     while position < count_numbers:
         digits = get_digits(number, position)
         result.append(get_form(digits, position))
@@ -63,15 +64,28 @@ def to_words(number):
     result.reverse()
 
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        if int(sys.argv[1]) > 0:
-            if len(sys.argv[1]) < 97:
-                to_words(sys.argv[1])
-                print(" ".join(result))
-            else:
-                print("Too long number.")
+def validate_args(args):
+    if len(args) > 1:
+        try:
+            number = int(args[1])
+        except ValueError:
+            return False, "Enter a number."
         else:
-            print("Invalid argument.")
+            if number > 0:
+                if len(args[1]) < 97:
+                    return True, args[1]
+                else:
+                    return False, "Too long number."
+            else:
+                return False, "Invalid argument. Number should be bigger then 0."
     else:
-        print("Enter a number to convert.")
+        return False, "Enter a number to convert."
+
+
+if __name__ == "__main__":
+    validation_result = validate_args(sys.argv)
+    if validation_result[0]:
+        to_words(validation_result[1])
+        print(" ".join(result))
+    else:
+        print(validation_result[1])
