@@ -2,6 +2,7 @@ import sys
 
 
 def get_board(horizontal, vertical):
+    """Create chessboard according to arguments. Return string value."""
     result = ""
     for ver in range(vertical):
         line = ""
@@ -15,6 +16,7 @@ def get_board(horizontal, vertical):
 
 
 def convert(str_type):
+    """Converts string value to integer. Return converted value or False if it is impossible."""
     try:
         int_type = int(str_type)
         return int_type
@@ -23,6 +25,7 @@ def convert(str_type):
 
 
 def print_chess_board(horizontal, vertical):
+    """Validate arguments and call get_boar function if arguments are valid."""
     horizontal = convert(horizontal)
     vertical = convert(vertical)
     if horizontal and vertical:
