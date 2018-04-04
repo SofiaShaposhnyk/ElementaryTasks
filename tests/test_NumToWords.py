@@ -4,25 +4,25 @@ import NumToWords
 
 class TestNumToWords(unittest.TestCase):
     def test_validate_args_valid_value(self):
-        args = ["file_path", "9999"]
+        args = ["9999"]
         expected = (True, "9999")
         actual = NumToWords.validate_args(args)
         self.assertEqual(actual, expected)
 
     def test_validate_args_text_value(self):
-        args = ["file_path", "text"]
+        args = ["text"]
         expected = (False, "Enter a number.")
         actual = NumToWords.validate_args(args)
         self.assertEqual(actual, expected)
 
     def test_validate_args_negative_value(self):
-        args = ["file_path", "-100"]
+        args = ["-100"]
         expected = (False, "Invalid argument. Number should be bigger then 0.")
         actual = NumToWords.validate_args(args)
         self.assertEqual(actual, expected)
 
     def test_validate_args_without_value(self):
-        args = ["file_path"]
+        args = []
         expected = (False, "Enter a number to convert.")
         actual = NumToWords.validate_args(args)
         self.assertEqual(actual, expected)
@@ -37,9 +37,9 @@ class TestNumToWords(unittest.TestCase):
         actual = NumToWords.get_digits(514, 0)
         self.assertEqual(actual, expected)
 
-    def test_to_words(self,):
+    def test_convert_to_words(self,):
         expected = ["сто", "сорок", "два", ""]
-        NumToWords.to_words("142")
+        NumToWords.convert_to_words("142")
         actual = NumToWords.result
         self.assertEqual(expected, actual)
 
