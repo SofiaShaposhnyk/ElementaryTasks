@@ -47,7 +47,8 @@ def is_sum_sides_bigger(rectangle1, rectangle2):
     sides sums rectangle2,
     False otherwise.
     """
-    if sum(rectangle1) > sum(rectangle2):
+    if (rectangle1["side1"] + rectangle1["side2"]) > \
+            (rectangle2["side1"] + rectangle2["side2"]):
         return True
     else:
         return False
