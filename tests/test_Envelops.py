@@ -43,15 +43,15 @@ class TestEnvelops(unittest.TestCase):
         result = Envelops.validate_side("9.9")
         self.assertEqual(result, expected)
 
-    @patch("Envelops.input_text", return_value="10")
+    @patch("Envelops.input_text", return_value="15")
     def test_validate_side_text_value(self, input):
-        expected = 10
+        expected = 15
         result = Envelops.validate_side("text")
         self.assertEqual(result, expected)
 
-    @patch("Envelops.input_text", return_value="10")
+    @patch("Envelops.input_text", return_value="20")
     def test_validate_side_negative_value(self, input):
-        expected = 10
+        expected = 20
         result = Envelops.validate_side("-7.7")
         self.assertEqual(result, expected)
 
