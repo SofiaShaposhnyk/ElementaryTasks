@@ -2,10 +2,15 @@ import sys
 from numberNames import ones, tens, hundreds, other
 
 
-result = []
-
-
 def get_form(digits, index):
+    """
+    Get a form of russian number name.
+
+    :param dict digits: dictionary with digits. Should contain
+    'hundreds', 'tens' and 'ones' keys
+    :param int index: index of position in initial number
+    :return str: name of number in correct form in russian
+    """
     index = int(index / 3)
     if other[index] == "":
         return ""
@@ -25,10 +30,25 @@ def get_form(digits, index):
 
 
 def get_numeral(number, position1, position2):
+    """
+    Get a numeral by its position.
+
+    :param int number: initial number
+    :param int position1: index position 'from'
+    :param int position2: index position 'to'
+    :return int: numeral by position
+    """
     return (number % 10**position1) // 10**position2
 
 
 def get_digits(number, position):
+    """
+    Get digits of the number by position.
+
+    :param int number: initial number
+    :param int position: position of digits
+    :return dict: dictionary with int representations of digits
+    """
     digits = dict()
     digits["ones"] = get_numeral(number, position + 1, position)
     digits["tens"] = get_numeral(number, position + 2, position + 1)
@@ -37,6 +57,10 @@ def get_digits(number, position):
 
 
 def append_digits(digits):
+    """
+    Append digits to result list
+    :param dict digits: digits values
+    """
     tens_and_ones = digits["tens"] * 10 + digits["ones"]
     if tens_and_ones < 20:
         result.append(ones[tens_and_ones])
@@ -46,7 +70,15 @@ def append_digits(digits):
     result.append(hundreds[digits["hundreds"]])
 
 
-def to_words(number):
+def convert_to_words(number):
+    """
+    Convert number value to a string representation
+
+    :param str number: number for converting
+    :return list: list of a string representation
+    """
+    global result
+    result = []
     count_numbers = len(number)
     number = int(number)
     position = 0
@@ -58,6 +90,7 @@ def to_words(number):
                 result.append("одна")
             elif digits["ones"] == 2:
                 result.append("две")
+            position += 3
         else:
             append_digits(digits)
             position += 3
@@ -65,15 +98,22 @@ def to_words(number):
 
 
 def validate_args(args):
-    if len(args) > 1:
+    """
+    Validate command line argument.
+
+    :param list args: command line arguments
+    :return tuple: [0] (bool) True if argument is valid, False otherwise
+    [1] (str) valid value or string with the reason of invalid value
+    """
+    if len(args) == 1:
         try:
-            number = int(args[1])
+            number = int(args[0])
         except ValueError:
             return False, "Enter a number."
         else:
             if number > 0:
-                if len(args[1]) < 97:
-                    return True, args[1]
+                if len(args[0]) < 97:
+                    return True, args[0]
                 else:
                     return False, "Too long number."
             else:
@@ -83,9 +123,9 @@ def validate_args(args):
 
 
 if __name__ == "__main__":
-    validation_result = validate_args(sys.argv)
+    validation_result = validate_args(sys.argv[1:])
     if validation_result[0]:
-        to_words(validation_result[1])
+        convert_to_words(validation_result[1])
         print(" ".join(result))
     else:
         print(validation_result[1])
