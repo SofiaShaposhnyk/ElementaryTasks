@@ -7,11 +7,11 @@ def input_text(text):
 
 
 def input_parameters():
-    """Input and validate parameters.
+    """
+    Input and validate parameters.
 
-    :return: tuple: side1(float), side2(float), side3(float) - valid sides for triangle
-             tuple: False, str - reason of invalid values
-
+    :return tuple: side1(float), side2(float), side3(float) - valid sides for triangle
+    False, str - reason of invalid values
     """
     triangle_parameters = re.sub(" ", "",
                                  input_text("Input triangle parameters:")).lower().split(",")
@@ -30,10 +30,11 @@ def input_parameters():
 
 
 def continue_input():
-    """Request for continuation.
+    """
+    Request for continuation.
 
-    :return:(bool) True if user input "y" or "yes"
-            False otherwise
+    :return bool: True if user input "y" or "yes"
+    False otherwise
     """
     next_triangle = input_text("Do you want to enter one more triangle?").lower()
     if next_triangle != "yes" and next_triangle != "y":
@@ -42,10 +43,11 @@ def continue_input():
 
 
 def print_triangles(triangle_list):
-    """Sort triangles by square and return it in descending order.
+    """
+    Sort triangles by square and return it in descending order.
 
-    :param triangle_list: list of Triangle objects
-    :return: (str)triangles names and squares in descending order
+    :param list triangle_list: of Triangle objects
+    :return str: triangles names and squares in descending order
     """
     triangles.sort(key=Triangle.get_square, reverse=True)
     result = "==========Triangles list:=========="
@@ -57,13 +59,14 @@ def print_triangles(triangle_list):
 
 
 def validate_parameters(side_1, side_2, side_3):
-    """Validate sides for triangle.
+    """
+    Validate sides for triangle.
 
-    :param side_1: (float)side of triangle
-    :param side_2: (float)side of triangle
-    :param side_3: (float)side of triangle
-    :return: (bool) - True if triangle with specified sides exist
-                      False otherwise
+    :param float side_1: side of triangle
+    :param float side_2: side of triangle
+    :param float side_3: side of triangle
+    :return bool: True if triangle with specified sides exist
+    False otherwise
     """
     if side_1 > 0 and side_2 > 0 and side_3 > 0 and (side_1 + side_2 > side_3) and \
             (side_1 + side_3 > side_2) and (side_3 + side_2 > side_1):
